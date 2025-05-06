@@ -108,8 +108,8 @@ const registerEmprendedor = (req, res) => {
 
   bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
     if (err) throw err;
-    const query = 'INSERT INTO emprendedores (correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(query, [correo, hashedPassword, nombre_proyecto, estado_proyecto, categoria_proyecto], (err) => {
+    const query = 'INSERT INTO emprendedores (correo, contraseña, nombre_completo, fecha_nacimiento, genero, numero_cedula) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula], (err) => {
       if (err) return res.status(500).json({ message: 'Error al registrar el emprendedor' });
       res.status(201).json({ message: 'Emprendedor registrado exitosamente' });
     });
