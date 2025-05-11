@@ -1,0 +1,132 @@
+/* Estilo global para centrar todo */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+  }
+  
+  .login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .btn-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  .register-options {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+  
+  .register-options li {
+    margin-bottom: 10px;
+  }
+  
+  .register-options a {
+    color: #007bff;
+  }
+  
+  .register-options a:hover {
+    text-decoration: underline;
+  }
+  
+  .my-3 {
+    text-align: center;
+  }
+  /* Estilos para el botón Registrate */
+.btn-register {
+    padding: 10px 20px;
+    background-color: #28a745; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+  }
+  
+  .btn-register:hover {
+    background-color: #218838; /* Verde más oscuro en hover */
+    transform: translateY(-2px); /* Efecto de levantado */
+  }
+  
+  .btn-register:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5); /* Sombra verde suave */
+  }
+  
+  .btn-register:active {
+    background-color: #1e7e34; /* Color al hacer click */
+    transform: translateY(0); /* El botón vuelve a su posición */
+  }
+  /* Estilo para los NavLink dentro del botón */
+/* Estilo para los NavLink dentro del botón */
+.navlink-register {
+    text-decoration: none;  /* Elimina el subrayado */
+    color: white;           /* Asegura que el texto sea blanco */
+    font-weight: bold;      /* Puedes cambiar el grosor de la fuente si lo deseas */
+  }
+  
+  .navlink-register:hover {
+    text-decoration: none;  /* Aseguramos que no haya subrayado */
+  }
+  
+  .navlink-register:focus {
+    outline: none;   /* Evita el contorno al hacer foco */
+  }
+  

@@ -1,0 +1,145 @@
+.custom-navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.navbar-logo {
+  height: 35px;
+  border-radius: 0.5rem;
+}
+
+.brand-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.nav-links .nav-link {
+  font-weight: 500;
+  color: #333;
+  transition: color 0.3s;
+  margin: 0 8px;
+}
+
+.nav-links .nav-link:hover {
+  color: #007bff;
+}
+
+.search-container {
+  align-items: center;
+}
+
+.search-input {
+  max-width: 180px;
+  border-radius: 20px;
+  background-color: #e8dee9;
+  border: none;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.profile-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.profile-icon:hover {
+  color: #007bff;
+}
+
+/* Dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1000;
+  min-width: 160px;
+  padding: 0.5rem 0;
+  margin-top: 0.25rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    transition: height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+  }
+
+  .collapse:not(.show) {
+    display: block;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .collapse.show {
+    height: auto;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .search-input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .profile-icon {
+    margin-top: 1rem;
+    align-self: flex-end;
+  }
+}
+
+/* Oculta el botón hamburguesa en pantallas grandes */
+@media (min-width: 993px) {
+  .navbar-toggler {
+    display: none;
+  }
+}

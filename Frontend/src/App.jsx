@@ -1,26 +1,21 @@
-// src/App.jsx
-// eslint-disable-next-line no-unused-vars
-import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login"; // Asegúrate de que la ruta sea correcta
-import RegisterUsuario from "./pages/RegisterUsuario"; // Asegúrate de que la ruta sea correcta
-import RegisterInversionista from "./pages/RegisterInversionista";
-import RegisterEmprendedor from "./pages/RegisterEmprendedor";
+import Navbar from './components/Navbar';
+import Index from "./pages/Index";
+import Login from "./pages/Login";
+import RegisterUsuario from "./pages/RegisterUsuario";
+
 
 const App = () => {
   return (
-    // <div>
-    //   <h1>Bienvenido a Adventures</h1>
-    //   <Login />
-    //   <RegisterUsuario />
-    // </div>
     <BrowserRouter>
+    <Navbar />
+    <Index />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/registerUsuario" element={<RegisterUsuario />} />
-        <Route path="/registerEmprendedor" element={<RegisterEmprendedor />} />
-        <Route path="/registerInversionista" element={<RegisterInversionista />} />
-
       </Routes>
     </BrowserRouter>  
   );

@@ -1,75 +1,142 @@
-import { useState } from 'react';
-import { registerUsuario } from '../services/authService';
+import { useState, useEffect } from "react";
+import { registerUsuario, getRoles } from "../services/authService";
+import "../styles/RegisterUsuario.css";
 
 const RegisterUsuario = () => {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [nombre_completo, setNombreCompleto] = useState('');
-  const [fecha_nacimiento, setFechaNacimiento] = useState('');
-  const [genero, setGenero] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    nombre_completo: "",
+    cedula: "",
+    correo: "",
+    contraseña: "",
+    fecha_nacimiento: "",
+    genero: "",
+    rol_id: "",
+  });
+  const [roles, setRoles] = useState([]);
+  const [error, setError] = useState("");
+
+  // Obtener roles disponibles al cargar el componente
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const rolesData = await getRoles();
+        setRoles(rolesData);
+      } catch (err) {
+        setError("Error al cargar los roles");
+      }
+    };
+    fetchRoles();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.rol_id) {
+      setError("Debes seleccionar un rol");
+      return;
+    }
+
     try {
-      await registerUsuario(correo, contraseña, nombre_completo, fecha_nacimiento, genero);
-      alert('Usuario registrado exitosamente');
+      const response = await registerUsuario(formData);
+
+      if (response.success) {
+        alert("Usuario registrado exitosamente");
+        // Limpiar formulario
+        setFormData({
+          nombre_completo: "",
+          cedula: "",
+          correo: "",
+          contraseña: "",
+          fecha_nacimiento: "",
+          genero: "",
+          rol_id: "",
+        });
+        setError("");
+      } else {
+        setError(response.message || "Error al registrar usuario");
+      }
     } catch (err) {
-      setError('Error al registrar usuario');
+      console.error("Error completo:", err);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.sqlError ||
+          "Error al conectar con el servidor"
+      );
     }
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Registrar Usuario</h2>
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="correo">Correo:</label>
-          <input
-            type="email"
-            id="correo"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="contraseña">Contraseña:</label>
-          <input
-            type="password"
-            id="contraseña"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            required
-          />
-        </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="nombre_completo">Nombre Completo:</label>
           <input
             type="text"
             id="nombre_completo"
-            value={nombre_completo}
-            onChange={(e) => setNombreCompleto(e.target.value)}
+            name="nombre_completo"
+            value={formData.nombre_completo}
+            onChange={handleChange}
             required
           />
         </div>
-        <div>
+        <div className="form-group">
+          <label htmlFor="cedula">Cédula:</label>
+          <input
+            type="number"
+            id="cedula"
+            name="cedula"
+            value={formData.cedula}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="correo">Correo:</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            value={formData.correo}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="contraseña">Contraseña:</label>
+          <input
+            type="password"
+            id="contraseña"
+            name="contraseña"
+            value={formData.contraseña}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="fecha_nacimiento">Fecha de Nacimiento:</label>
           <input
             type="date"
             id="fecha_nacimiento"
-            value={fecha_nacimiento}
-            onChange={(e) => setFechaNacimiento(e.target.value)}
+            name="fecha_nacimiento"
+            value={formData.fecha_nacimiento}
+            onChange={handleChange}
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="genero">Género:</label>
           <select
             id="genero"
-            value={genero}
-            onChange={(e) => setGenero(e.target.value)}
+            name="genero"
+            value={formData.genero}
+            onChange={handleChange}
             required
           >
             <option value="">Selecciona tu género</option>
@@ -77,8 +144,26 @@ const RegisterUsuario = () => {
             <option value="Femenino">Femenino</option>
           </select>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Registrar Usuario</button>
+        <div className="form-group">
+          <label htmlFor="rol_id">Selecciona tu rol:</label>
+          <select
+            id="rol_id"
+            name="rol_id"
+            value={formData.rol_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecciona un rol</option>
+            {roles.map((role) => (
+              <option key={role.id} value={role.id}>
+                {role.rol}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="submit" className="submit-btn">
+          Registrar Usuario
+        </button>
       </form>
     </div>
   );

@@ -1,12 +1,12 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
-import { login } from '../services/authService';
-import { NavLink } from 'react-router-dom';
+import { useState } from "react";
+import { login } from "../services/authService";
+import { NavLink } from "react-router-dom";
+import "../styles/Login.css";
 
 const Login = () => {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
+  const [correo, setCorreo] = useState("");
+  const [contraseña, setContraseña] = useState("");
+  const [error, setError] = useState("");
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -14,59 +14,62 @@ const Login = () => {
 
     try {
       const data = await login(correo, contraseña);
-      localStorage.setItem('token', data.token);
-      alert('Login exitoso');
+      localStorage.setItem("token", data.token);
+      alert("Login exitoso");
       // Redirigir según el rol del usuario si es necesario
     } catch (err) {
-      setError('Credenciales incorrectas');
+      setError("Credenciales incorrectas");
     }
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="correo">Correo:</label>
-          <input
-            type="email"
-            id="correo"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="contraseña">Contraseña:</label>
-          <input
-            type="password"
-            id="contraseña"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Iniciar Sesión</button>
-        <br />
-        <div className="my-3">
-          <span>No tienes cuenta?</span>{" "}
-          <button type="button" onClick={() => setMostrarOpciones(!mostrarOpciones)}>
-            Registrate
+    <div className="login-container">
+      <div className="login-form">
+        <h2>Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="correo">Correo:</label>
+            <input
+              type="email"
+              id="correo"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contraseña">Contraseña:</label>
+            <input
+              type="password"
+              id="contraseña"
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="btn-submit">
+            Iniciar Sesión
           </button>
-          {mostrarOpciones && (
-            <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
-              <li><NavLink to="/registerUsuario">Registrar Usuario</NavLink></li>
-              <li><NavLink to="/registerEmprendedor">Registrar Emprendedor</NavLink></li>
-              <li><NavLink to="/registerInversionista">Registrar Inversionista</NavLink></li>
-            </ul>
-          )}
-          <br />
-          <span>
-            <a href="#">Recuperar contraseña</a>
-          </span>
-        </div>
-      </form>
+          <div className="my-3">
+            <span>No tienes cuenta? </span>
+            <button
+              type="button"
+              className="btn-register"
+              onClick={() => setMostrarOpciones(!mostrarOpciones)}
+            >
+              <NavLink to="/registerUsuario" className="navlink-register">
+                Registrate
+              </NavLink>
+            </button>
+
+            <br />
+            <span>
+              <a href="#">Recuperar contraseña</a>
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

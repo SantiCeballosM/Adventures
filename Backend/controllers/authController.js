@@ -3,140 +3,158 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
 // Login general: busca en las tres tablas por orden
-const login = (req, res) => {
+const login = async (req, res) => {
   const { correo, contraseña } = req.body;
 
-  if (!correo || !contraseña) {
-    return res.status(400).json({ message: 'Correo y contraseña son obligatorios' });
+  try {
+    // 1. Buscar usuario
+    const [users] = await db.query('SELECT * FROM usuarioss WHERE correo = ?', [correo]);
+    
+    if (users.length === 0) {
+      return res.status(401).json({ message: 'Credenciales inválidas' });
+    }
+
+    const user = users[0];
+
+    // 2. Verificar contraseña
+    const isMatch = await bcrypt.compare(contraseña, user.contraseña);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Credenciales inválidas' });
+    }
+
+    // 3. Obtener roles del usuario
+    const [userRoles] = await db.query(`
+      SELECT r.rol 
+      FROM rol_usuarios ru
+      JOIN roles r ON ru.rol_id = r.id
+      WHERE ru.usuario_id = ?
+    `, [user.id]);
+
+    // 4. Generar token con información del rol
+    const token = jwt.sign(
+      {
+        id: user.id,
+        roles: userRoles.map(r => r.rol),
+        nombre: user.nombre_completo
+      },
+      process.env.JWT_SECRET || 'secreto',
+      { expiresIn: '1h' }
+    );
+
+    res.json({
+      message: 'Login exitoso',
+      token,
+      user: {
+        id: user.id,
+        nombre: user.nombre_completo,
+        roles: userRoles.map(r => r.rol)
+      }
+    });
+  } catch (error) {
+    console.error('Error en login:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
+
+const registerUsuario = async (req, res) => {
+  const { nombre_completo, cedula, correo, contraseña, fecha_nacimiento, genero, rol_id } = req.body;
+
+  // Validación mejorada
+  if (!nombre_completo || !cedula || !correo || !contraseña || !fecha_nacimiento || !genero || !rol_id) {
+    return res.status(400).json({ 
+      success: false,
+      message: 'Todos los campos son obligatorios' 
+    });
   }
 
-  // Buscar en tabla usuarios
-  const buscarUsuario = () => {
-    db.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (err, results) => {
-      if (err) return res.status(500).json({ message: 'Error interno del servidor' });
-      if (results.length === 0) return buscarEmprendedor();
-      
-      const usuario = results[0];
-      bcrypt.compare(contraseña, usuario.contraseña, (err, isMatch) => {
-        if (!isMatch) return res.status(401).json({ message: 'Contraseña incorrecta' });
+  try {
+    // 1. Verificar si el usuario ya existe
+    const [userExists] = await db.query(
+      'SELECT id FROM usuarioss WHERE correo = ? OR cedula = ?', 
+      [correo, cedula]
+    );
 
-        const token = jwt.sign({ id: usuario.id, tipo: 'usuario' }, process.env.JWT_SECRET || 'secreto', { expiresIn: '1h' });
-
-        return res.json({
-          message: 'Login exitoso como usuario',
-          token,
-          tipo: 'usuario',
-          nombre: usuario.nombre_completo
-        });
+    if (userExists.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'El correo o cédula ya están registrados'
       });
+    }
+
+    // 2. Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(contraseña, 12);
+
+    // 3. Insertar usuario
+    const [userResult] = await db.query(
+      'INSERT INTO usuarioss (nombre_completo, cedula, correo, contraseña, fecha_nacimiento, genero) VALUES (?, ?, ?, ?, ?, ?)',
+      [nombre_completo, cedula, correo, hashedPassword, fecha_nacimiento, genero]
+    );
+
+    // 4. Insertar relación usuario-rol
+    await db.query(
+      'INSERT INTO rol_usuarios (usuario_id, rol_id) VALUES (?, ?)',
+      [userResult.insertId, rol_id]
+    );
+
+    res.status(201).json({
+      success: true,
+      message: 'Usuario registrado exitosamente',
+      userId: userResult.insertId
     });
-  };
 
-  // Buscar en tabla emprendedores
-  const buscarEmprendedor = () => {
-    db.query('SELECT * FROM emprendedores WHERE correo = ?', [correo], (err, results) => {
-      if (err) return res.status(500).json({ message: 'Error interno del servidor' });
-      if (results.length === 0) return buscarInversionista();
-
-      const emprendedor = results[0];
-      bcrypt.compare(contraseña, emprendedor.contraseña, (err, isMatch) => {
-        if (!isMatch) return res.status(401).json({ message: 'Contraseña incorrecta' });
-
-        const token = jwt.sign({ id: emprendedor.id, tipo: 'emprendedor' }, process.env.JWT_SECRET || 'secreto', { expiresIn: '1h' });
-
-        return res.json({
-          message: 'Login exitoso como emprendedor',
-          token,
-          tipo: 'emprendedor',
-          nombre_proyecto: emprendedor.nombre_proyecto,
-          categoria: emprendedor.categoria_proyecto
-        });
-      });
+  } catch (error) {
+    console.error('Error en registro:', error);
+    
+    // Respuesta detallada del error
+    res.status(500).json({
+      success: false,
+      message: 'Error al registrar el usuario',
+      error: error.message,
+      sqlError: error.sqlMessage || null
     });
-  };
-
-  // Buscar en tabla inversionistas
-  const buscarInversionista = () => {
-    db.query('SELECT * FROM inversionistas WHERE correo = ?', [correo], (err, results) => {
-      if (err) return res.status(500).json({ message: 'Error interno del servidor' });
-      if (results.length === 0) return res.status(401).json({ message: 'Correo no registrado' });
-
-      const inversionista = results[0];
-      bcrypt.compare(contraseña, inversionista.contraseña, (err, isMatch) => {
-        if (!isMatch) return res.status(401).json({ message: 'Contraseña incorrecta' });
-
-        const token = jwt.sign({ id: inversionista.id, tipo: 'inversionista' }, process.env.JWT_SECRET || 'secreto', { expiresIn: '1h' });
-
-        return res.json({
-          message: 'Login exitoso como inversionista',
-          token,
-          tipo: 'inversionista',
-          categoria: inversionista.categoria_interes
-        });
-      });
-    });
-  };
-
-  buscarUsuario(); // Empieza la cadena
-};
-
-// Registro individual
-const registerUsuario = (req, res) => {
-  const { correo, contraseña, nombre_completo, fecha_nacimiento, genero } = req.body;
-
-  if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero) {
-    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
-
-  bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
-    if (err) throw err;
-    const query = 'INSERT INTO usuarios (correo, contraseña, nombre_completo, fecha_nacimiento, genero) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero], (err) => {
-      if (err) return res.status(500).json({ message: 'Error al registrar el usuario' });
-      res.status(201).json({ message: 'Usuario registrado exitosamente' });
-    });
-  });
 };
+// const registerEmprendedor = (req, res) => {
+//   // console.log('Datos recibidos:', req.body); 
+//   const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula } = req.body;
 
-const registerEmprendedor = (req, res) => {
-  // console.log('Datos recibidos:', req.body); 
-  const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula } = req.body;
+//   if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula) {
+//     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+//   }
 
-  if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula) {
-    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-  }
+//   bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
+//     if (err) throw err;
+//     const query = 'INSERT INTO emprendedores (correo, contraseña, nombre_completo, fecha_nacimiento, genero, numero_cedula) VALUES (?, ?, ?, ?, ?, ?)';
+//     db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula], (err) => {
+//       if (err) return res.status(500).json({ message: 'Error al registrar el emprendedor' });
+//       res.status(201).json({ message: 'Emprendedor registrado exitosamente' });
+//     });
+//   });
+// };
 
-  bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
-    if (err) throw err;
-    const query = 'INSERT INTO emprendedores (correo, contraseña, nombre_completo, fecha_nacimiento, genero, numero_cedula) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula], (err) => {
-      if (err) return res.status(500).json({ message: 'Error al registrar el emprendedor' });
-      res.status(201).json({ message: 'Emprendedor registrado exitosamente' });
-    });
-  });
-};
+// const registerInversionista = (req, res) => {
+//   // console.log('Datos recibidos:', req.body); 
+//   const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes } = req.body;
 
-const registerInversionista = (req, res) => {
-  // console.log('Datos recibidos:', req.body); 
-  const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes } = req.body;
+//   if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula || !categoria_interes) {
+//     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+//   }
 
-  if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula || !categoria_interes) {
-    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-  }
+//   bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
+//     if (err) throw err;
+//     const query = 'INSERT INTO inversionistas (correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes) VALUES (?, ?, ?, ?, ?, ?, ?)';
+//     db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes], (err) => {
+//       if (err) return res.status(500).json({ message: 'Error al registrar el inversionista' });
+//       res.status(201).json({ message: 'Inversionista registrado exitosamente' });
+//     });
+//   });
+// };
 
-  bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
-    if (err) throw err;
-    const query = 'INSERT INTO inversionistas (correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes], (err) => {
-      if (err) return res.status(500).json({ message: 'Error al registrar el inversionista' });
-      res.status(201).json({ message: 'Inversionista registrado exitosamente' });
-    });
-  });
-};
+
+
 
 module.exports = {
   login,
   registerUsuario,
-  registerEmprendedor,
-  registerInversionista
 };

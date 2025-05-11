@@ -1,0 +1,237 @@
+/* Estilos base */
+.landing-page {
+  /* Fondo con overlay oscuro degradado */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.3)),
+    url('../img/fondo_Index.jpg') center/cover fixed no-repeat;
+
+  /* Alternativa con efecto de iluminación focal */
+
+
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  transition: background 0.5s ease;
+}
+
+/* Efecto hover sutil para interactividad */
+.landing-page:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Mejora para dispositivos móviles */
+@media (max-width: 768px) {
+  .landing-page {
+    background-attachment: scroll;
+    /* Mejor performance en móviles */
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.5)),
+      url('../img/Fondo_landing.jpg') center/cover no-repeat;
+  }
+}
+
+.landing-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Textos */
+.landing-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.landing-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Grid principal */
+.landing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Sección de búsqueda */
+.search-section {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.search-form {
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  background: white;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.8rem;
+  color: #555;
+  pointer-events: none;
+}
+
+/* Sección de cita */
+.quote-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.laptop-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.laptop-image:hover {
+  transform: scale(1.02);
+}
+
+.landing-quote {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-style: italic;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid #4e9af1;
+  position: relative;
+}
+
+.landing-quote::before,
+.landing-quote::after {
+  content: '"';
+  font-size: 2rem;
+  color: #4e9af1;
+  opacity: 0.5;
+}
+
+/* Efectos y animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-text {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .landing-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .landing-title {
+    font-size: 2rem;
+  }
+
+  .landing-subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page {
+    padding: 1rem;
+  }
+
+  .landing-content {
+    padding: 1rem;
+  }
+
+  .search-section {
+    padding: 1.5rem;
+  }
+
+  .landing-quote {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .landing-title {
+    font-size: 1.8rem;
+  }
+
+  .landing-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-input {
+    padding: 0.7rem 1rem 0.7rem 2.2rem;
+  }
+
+  .input-icon {
+    left: 0.6rem;
+  }
+}

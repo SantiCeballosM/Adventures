@@ -2,18 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-// 👇 IMPORTANTE: importar tu archivo de rutas
+// Configuración CORS actualizada
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:5173'], // Agrega ambos orígenes
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Resto de tu configuración...
+app.use(express.json());
+
+// Importar y usar rutas
 const authRoutes = require('./routes/authRoutes');
-
-// Middleware
-app.use(cors());           // para permitir solicitudes de otros orígenes (como el frontend)
-app.use(express.json());   // para parsear JSON
-
-// 👇 Aquí es donde se asocia el prefijo
 app.use('/api/auth', authRoutes);
 
 // Iniciar servidor
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
