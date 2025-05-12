@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { login } from "../services/authService";
-import { NavLink } from "react-router-dom";
-import "../styles/Login.css";
+import { useState } from 'react';
+import { login } from '../services/authService';
+import { NavLink } from 'react-router-dom';
+import '../styles/Login.css';
 
 const Login = () => {
-  const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [error, setError] = useState("");
+  const [correo, setCorreo] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [error, setError] = useState('');
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -14,11 +14,11 @@ const Login = () => {
 
     try {
       const data = await login(correo, contraseña);
-      localStorage.setItem("token", data.token);
-      alert("Login exitoso");
+      localStorage.setItem('token', data.token);
+      alert('Login exitoso');
       // Redirigir según el rol del usuario si es necesario
     } catch (err) {
-      setError("Credenciales incorrectas");
+      setError('Credenciales incorrectas');
     }
   };
 
@@ -48,19 +48,11 @@ const Login = () => {
             />
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="btn-submit">
-            Iniciar Sesión
-          </button>
+          <button type="submit" className="btn-submit">Iniciar Sesión</button>
           <div className="my-3">
             <span>No tienes cuenta? </span>
-            <button
-              type="button"
-              className="btn-register"
-              onClick={() => setMostrarOpciones(!mostrarOpciones)}
-            >
-              <NavLink to="/registerUsuario" className="navlink-register">
-                Registrate
-              </NavLink>
+            <button type="button" className="btn-register" onClick={() => setMostrarOpciones(!mostrarOpciones)}>
+              <NavLink to="/registerUsuario" className="navlink-register">Registrate</NavLink>
             </button>
 
             <br />

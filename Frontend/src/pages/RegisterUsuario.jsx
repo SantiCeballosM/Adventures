@@ -71,7 +71,7 @@ const RegisterUsuario = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="register-container ">
       <h2>Registrar Usuario</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>

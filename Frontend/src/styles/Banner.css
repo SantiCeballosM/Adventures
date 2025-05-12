@@ -1,19 +1,18 @@
 /* Estilos base */
+
+.h1_bienvenido{
+  text-align: center;
+}
 .landing-page {
   /* Fondo con overlay oscuro degradado */
   background:
     linear-gradient(rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.3)),
+      rgba(34, 34, 34, 0.3)),
     url('../img/fondo_Index.jpg') center/cover fixed no-repeat;
-
-  /* Alternativa con efecto de iluminación focal */
-
-
   min-height: 100vh;
   color: white;
   display: flex;
   align-items: center;
-  padding: 2rem;
   position: relative;
   transition: background 0.5s ease;
 }
@@ -31,11 +30,12 @@
     background:
       linear-gradient(rgba(0, 0, 0, 0.8),
         rgba(0, 0, 0, 0.5)),
-      url('../img/Fondo_landing.jpg') center/cover no-repeat;
+      url('../img/fondo_Index.jpg') center/cover no-repeat;
   }
 }
 
 .landing-content {
+  
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -154,7 +154,7 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   border-left: 4px solid #4e9af1;
-  position: relative;
+  position: relative; 
 }
 
 .landing-quote::before,

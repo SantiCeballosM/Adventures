@@ -1,7 +1,8 @@
-import '../styles/Navbar.css';
-import logo from '../img/Adventures_logo.png';
-import { FaUser, FaSearch } from 'react-icons/fa';
-import { useState, useRef, useEffect } from 'react';
+import "../styles/Navbar.css";
+import logo from "../img/Adventures_logo.png";
+import { FaUser, FaSearch } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -9,9 +10,10 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dropdownRef = useRef(null);
+  const navbarRef = useRef(null);
 
   const toggleNavbar = () => setIsCollapsed(!isCollapsed);
-  const toggleDropdown = () => setShowDropdown(prev => !prev);
+  const toggleDropdown = () => setShowDropdown(!showDropdown);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -29,59 +31,134 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar custom-navbar navbar-expand-lg">
+    <nav
+      className="nabarhub navbar custom-navbar navbar-expand-lg"
+      ref={navbarRef}
+    >
       <div className="container-fluid px-3">
-        <a className="navbar-brand d-flex align-items-center" href="#">
-          <img src={logo} alt="Adventures logo" className="navbar-logo me-2" />
-          <span className="brand-text">Adventures</span>
-        </a>
+        {/* Logo y búsqueda primero en móvil */}
+        <div className="d-flex align-items-center mobile-top-section">
+          <a
+            className="navbar-brand d-flex align-items-center me-auto"
+            href="#"
+          >
+            <img
+              src={logo}
+              alt="Adventures logo"
+              className="navbar-logo me-2"
+            />
+            <span className="brand-text d-none d-lg-inline">Adventures</span>
+          </a>
 
-        {/* Botón hamburguesa solo visible en pantallas pequeñas */}
-        <button
-          className="navbar-toggler d-lg-none"
-          type="button"
-          onClick={toggleNavbar}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`}>
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
-            <li className="nav-item"><a className="nav-link" href="#">Inicio</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Categorías</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Favoritos</a></li>
-          </ul>
-
-          <form className="d-flex search-container me-3" role="search">
+          {/* Barra de búsqueda visible en móvil */}
+          <form
+            className="d-flex search-container mobile-search me-2"
+            role="search"
+          >
             <input
               className="form-control search-input"
               type="search"
               placeholder="Buscar..."
               aria-label="Buscar"
             />
-            <button className="btn search-button ms-2" type="submit">
+            <button className="btn search-button" type="submit">
+              <FaSearch />
+            </button>
+          </form>
+
+          {/* Botón hamburguesa */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleNavbar}
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <div
+          className={`collapse navbar-collapse ${isCollapsed ? "" : "show"}`}
+        >
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Inicio
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Categorías
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Favoritos
+              </a>
+            </li>
+          </ul>
+
+          {/* Barra de búsqueda para desktop */}
+          <form
+            className="d-flex search-container desktop-search me-3"
+            role="search"
+          >
+            <input
+              className="form-control search-input"
+              type="search"
+              placeholder="Buscar..."
+              aria-label="Buscar"
+            />
+            <button className="btn search-button" type="submit">
               <FaSearch />
             </button>
           </form>
 
           <div className="profile-dropdown" ref={dropdownRef}>
-            <div className="profile-icon" onClick={toggleDropdown}>
+            <div
+              className="profile-icon d-flex align-items-center justify-content-center"
+              onClick={toggleDropdown}
+              aria-expanded={showDropdown}
+            >
               <FaUser />
             </div>
             {showDropdown && (
-              <ul className="dropdown-menu show">
+              <div className="dropdown-menu show" style={{ display: "block" }}>
                 {isLoggedIn ? (
                   <>
-                    <li><a className="dropdown-item" href="#">Mi perfil</a></li>
-                    <li><button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button></li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="#"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      Mi perfil
+                    </NavLink>
+                    <button className="dropdown-item" onClick={handleLogout}>
+                      Cerrar sesión
+                    </button>
                   </>
                 ) : (
                   <>
-                    <li><a className="dropdown-item" href="#" onClick={() => setIsLoggedIn(true)}>Iniciar sesión</a></li>
-                    <li><a className="dropdown-item" href="#">Registrarse</a></li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/login"
+                      onClick={() => {
+                        setIsLoggedIn(true);
+                        setShowDropdown(false);
+                      }}
+                    >
+                      Iniciar sesión
+                    </NavLink>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/registerUsuario"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      Registrarse
+                    </NavLink>
                   </>
                 )}
-              </ul>
+              </div>
             )}
           </div>
         </div>
