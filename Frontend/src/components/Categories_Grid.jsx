@@ -98,17 +98,27 @@ const categorias = [
 
 const Categories_Grid = () => {
   return (
+    <div className="grid-main-container">
+      {/* Título con el mismo fondo del grid */}
+      <div
+        className="grid-title-wrapper"
+        style={{ backgroundColor: "#989898" }}
+      >
+        <h1 className="main-title">ESTAS SON NUESTRAS CATEGORÍAS</h1>
+      </div>
 
-    <div className="grid-container">
-      {categorias.map((categoria, index) => (
-        <div className="grid-item" key={index}>
-          <img src={categoria.imagen} alt={categoria.titulo} />
-          <div className="text-content">
-            <h3>{categoria.titulo}</h3>
-            <p>{categoria.descripcion}</p>
+      {/* Contenedor del grid (sin cambios) */}
+      <div className="grid-container">
+        {categorias.map((categoria, index) => (
+          <div className="grid-item" key={index}>
+            <img src={categoria.imagen} alt={categoria.titulo} />
+            <div className="text-content">
+              <h3>{categoria.titulo}</h3>
+              <p>{categoria.descripcion}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

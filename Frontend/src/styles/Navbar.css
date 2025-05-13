@@ -1,3 +1,40 @@
+/* Estilos para el badge de rol */
+.user-role-badge {
+  background-color: #4e9af1;
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+/* Estilos para el dropdown */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  background-color:  #fff !important;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: black !important;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff !important;
+}
+
+.NavLink-Inicio{
+  text-decoration: none;
+}
 .NavLink-Login {
   text-decoration: none;
 }
@@ -5,12 +42,26 @@
   background-color: #000000;
 }
 .custom-navbar {
-  background-color: #cacaca;
+  background-color: rgba(202, 202, 202, 0.9) !important; /* Fondo semitransparente */
+  -webkit-backdrop-filter: blur(10px) !important; /* Efecto de vidrio esmerilado para Safari */
+  backdrop-filter: blur(10px) !important; /* Efecto de vidrio esmerilado */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
-  border-radius: 2rem;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
+.custom-navbar.scrolled {
+  background-color: rgba(202, 202, 202, 0.95); /* Más opaco al hacer scroll */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  -webkit-backdrop-filter: blur(12px); /* Más blur al hacer scroll para Safari */
+  backdrop-filter: blur(12px); /* Más blur al hacer scroll */
+}
+
+/* Resto de tus estilos permanecen igual */
 .navbar-logo {
   height: 35px;
   border-radius: 0.5rem;
@@ -20,6 +71,8 @@
   font-weight: bold;
   font-size: 1.2rem;
 }
+
+/* ... (todos tus otros estilos existentes) ... */
 
 .nav-links .nav-link {
   font-weight: 500;
@@ -105,7 +158,7 @@
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
+  background-color: #007bff;
   color: #16181b;
 }
 

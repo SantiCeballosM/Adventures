@@ -2,17 +2,18 @@ import axios from "axios";
 
 const API_URL = `http://localhost:5000/api/auth`; // Cambia esto si el backend corre en otro puerto
 
-// Función para login
-
+// authService.jsx
 export const login = async (correo, contraseña) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, {
-      correo,
-      contraseña,
-    });
-    return response.data;
+    const response = await axios.post(`${API_URL}/login`, { correo, contraseña });
+
+    return {
+      token: response.data.token,
+      rol: response.data.user.roles[0],
+      nombre: response.data.user.nombre
+    };
   } catch (error) {
-    console.error("Error al hacer login", error);
+    console.error('Error al hacer login', error);
     throw error;
   }
 };

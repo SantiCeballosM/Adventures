@@ -115,44 +115,6 @@ const registerUsuario = async (req, res) => {
     });
   }
 };
-// const registerEmprendedor = (req, res) => {
-//   // console.log('Datos recibidos:', req.body); 
-//   const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula } = req.body;
-
-//   if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula) {
-//     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-//   }
-
-//   bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
-//     if (err) throw err;
-//     const query = 'INSERT INTO emprendedores (correo, contraseña, nombre_completo, fecha_nacimiento, genero, numero_cedula) VALUES (?, ?, ?, ?, ?, ?)';
-//     db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula], (err) => {
-//       if (err) return res.status(500).json({ message: 'Error al registrar el emprendedor' });
-//       res.status(201).json({ message: 'Emprendedor registrado exitosamente' });
-//     });
-//   });
-// };
-
-// const registerInversionista = (req, res) => {
-//   // console.log('Datos recibidos:', req.body); 
-//   const { correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes } = req.body;
-
-//   if (!correo || !contraseña || !nombre_completo || !fecha_nacimiento || !genero || !numero_cedula || !categoria_interes) {
-//     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-//   }
-
-//   bcrypt.hash(contraseña, 10, (err, hashedPassword) => {
-//     if (err) throw err;
-//     const query = 'INSERT INTO inversionistas (correo, contraseña,nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes) VALUES (?, ?, ?, ?, ?, ?, ?)';
-//     db.query(query, [correo, hashedPassword, nombre_completo, fecha_nacimiento, genero, numero_cedula, categoria_interes], (err) => {
-//       if (err) return res.status(500).json({ message: 'Error al registrar el inversionista' });
-//       res.status(201).json({ message: 'Inversionista registrado exitosamente' });
-//     });
-//   });
-// };
-
-
-
 
 module.exports = {
   login,

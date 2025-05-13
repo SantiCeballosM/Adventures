@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';
 import { NavLink } from 'react-router-dom';
 import '../styles/Login.css';
@@ -8,19 +9,21 @@ const Login = () => {
   const [contraseña, setContraseña] = useState('');
   const [error, setError] = useState('');
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const data = await login(correo, contraseña);
-      localStorage.setItem('token', data.token);
-      alert('Login exitoso');
-      // Redirigir según el rol del usuario si es necesario
-    } catch (err) {
-      setError('Credenciales incorrectas');
-    }
-  };
+  try {
+    const data = await login(correo, contraseña);
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('rol', data.rol); // Asumiendo que el backend devuelve el rol
+    alert('Login exitoso');
+    navigate('/');
+  } catch (err) {
+    setError('Credenciales incorrectas');
+  }
+};
 
   return (
     <div className="login-container">
