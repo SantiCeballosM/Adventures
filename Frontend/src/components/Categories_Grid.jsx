@@ -1,4 +1,5 @@
 import "../styles/CategoryCard.css";
+import { NavLink } from "react-router-dom";
 
 // Importación de imágenes
 import Alimentos_Bebidas from "../img/imgs_categorias/Alimentos_Bebidas.png";
@@ -107,7 +108,7 @@ const Categories_Grid = () => {
         <h1 className="main-title">ESTAS SON NUESTRAS CATEGORÍAS</h1>
       </div>
 
-      {/* Contenedor del grid (sin cambios) */}
+      <NavLink to="/Tecnologia_Innovacion" className="grid-link" onClick={() => window.scrollTo(0, 0)}>
       <div className="grid-container">
         {categorias.map((categoria, index) => (
           <div className="grid-item" key={index}>
@@ -119,8 +120,11 @@ const Categories_Grid = () => {
           </div>
         ))}
       </div>
+      </NavLink>
     </div>
   );
 };
 
 export default Categories_Grid;
+
+

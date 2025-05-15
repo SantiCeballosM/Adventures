@@ -200,16 +200,9 @@ const Navbar = () => {
 
           <div className="profile-dropdown" ref={dropdownRef}>
             <div
-              className="profile-icon d-flex align-items-center justify-content-center"
+              className="profile-icon d-flex align-items-center justify-content-center icon_perfile_1"
               onClick={toggleDropdown}
-              style={{
-                width: "35px",
-                height: "35px",
-                borderRadius: "50%",
-                backgroundColor: "#007bff",
-                color: "white",
-                cursor: "pointer",
-              }}
+
               title={rol}
             >
               {getRoleIcon(rol)}

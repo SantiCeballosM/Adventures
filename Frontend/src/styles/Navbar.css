@@ -20,7 +20,14 @@
   min-width: 200px;
   z-index: 1000;
 }
-
+/* .icon_perfile_1{
+  width: 35px,
+  height: 35px,
+  borderRadius: 50%,
+  backgroundColor: #007bff,
+  color: white;
+  cursor: pointer;
+} */
 .dropdown-item {
   background-color:  #fff !important;
   padding: 0.5rem 1rem;
@@ -93,7 +100,9 @@
   border-radius: 20px;
   background-color: #e8dee9;
   border: none;
+  margin-right: 10px;
 }
+
 
 .search-button {
   background-color: #007bff;

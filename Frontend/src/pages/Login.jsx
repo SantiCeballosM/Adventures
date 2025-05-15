@@ -17,7 +17,7 @@ const handleSubmit = async (e) => {
   try {
     const data = await login(correo, contraseña);
     localStorage.setItem('token', data.token);
-    localStorage.setItem('rol', data.rol); // Asumiendo que el backend devuelve el rol
+    localStorage.setItem('rol', data.rol); 
     alert('Login exitoso');
     navigate('/');
   } catch (err) {
