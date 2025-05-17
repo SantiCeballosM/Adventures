@@ -8,6 +8,7 @@ export default function Invertir() {
     <Fragment>
       <Navbar />
       <Boton_Invertir />
+      
     </Fragment>
   );
 }

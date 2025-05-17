@@ -104,14 +104,16 @@ const registerUsuario = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en registro:', error);
-    
-    // Respuesta detallada del error
+    console.error("Error en registro:", error);
+  
+    // Verificar error de MySQL por campo fuera de rango
+    if (error.code === "ER_WARN_DATA_OUT_OF_RANGE" && error.sqlMessage.includes("cedula")) {
+      return res.status(400).json({ message: "La cédula ingresada es demasiado larga. Debe tener como máximo 10 dígitos." });
+    }
+  
     res.status(500).json({
-      success: false,
-      message: 'Error al registrar el usuario',
-      error: error.message,
-      sqlError: error.sqlMessage || null
+      message: "Error al registrar usuario",
+      sqlError: error.sqlMessage,
     });
   }
 };

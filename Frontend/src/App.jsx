@@ -9,6 +9,8 @@ import Categoria_Tecnologia from "./pages/Categoria_Tecnologia";
 // import DetalleEmprendimiento from "./pages/DetalleEmprendimiento";
 import Emprendimientos from './pages/Emprendimientos';
 import Invertir from './pages/Invertir';
+import CrearEmprendimiento from './pages/CrearEmprendimiento';
+import MisEmprendimientos from './pages/MisEmprendimientos';
 
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/tecnologia_innovacion" element={<Categoria_Tecnologia />} />
         <Route path="/emprendimientos" element={<Emprendimientos/>}/>
         <Route path="/invertir" element={<Invertir/>}/>
+        <Route path="/crearEmprendimiento" element={<CrearEmprendimiento/>}/>
+        <Route path="/misEmprendimientos" element={<MisEmprendimientos/>}/>
       </Routes>
     </BrowserRouter>  
   );

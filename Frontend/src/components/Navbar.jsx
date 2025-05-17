@@ -161,12 +161,12 @@ const Navbar = () => {
             {rol === "emprendedor" && (
               <>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/crear-emprendimiento">
+                  <NavLink className="nav-link" to="/crearEmprendimiento">
                     Crear Emprendimiento
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/mis-emprendimientos">
+                  <NavLink className="nav-link" to="/misEmprendimientos">
                     Mis Emprendimientos
                   </NavLink>
                 </li>

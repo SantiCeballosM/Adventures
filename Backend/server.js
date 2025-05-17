@@ -2,21 +2,25 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-// Configuración CORS actualizada
+// CORS
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:5173'], // Agrega ambos orígenes
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true,
   optionsSuccessStatus: 200
 };
-
 app.use(cors(corsOptions));
 
-// Resto de tu configuración...
+// Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads")); // para servir imágenes
 
-// Importar y usar rutas
+// Importar rutas
 const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes);
+const emprendimientoRoutes = require('./routes/emprendimientoRoutes'); // nueva ruta separada
+
+app.use('/api/auth', authRoutes); // rutas de autenticación
+app.use('/api/emprendimientos', emprendimientoRoutes); // rutas de emprendimientos
 
 // Iniciar servidor
 const PORT = process.env.PORT || 5000;

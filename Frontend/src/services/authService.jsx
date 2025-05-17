@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const API_URL = `http://localhost:5000/api/auth`; // Cambia esto si el backend corre en otro puerto
+const API_URL = `http://localhost:5000/api/auth`; // backend auth
+const API_URL_EMPRENDIMIENTOS = `http://localhost:5000/api/emprendimientos`; // backend emprendimientos
 
 // authService.jsx
+
 export const login = async (correo, contraseña) => {
   try {
     const response = await axios.post(`${API_URL}/login`, { correo, contraseña });
-
     return {
       token: response.data.token,
       rol: response.data.user.roles[0],
@@ -37,3 +38,21 @@ export const getRoles = async () => {
     throw error;
   }
 };
+
+// Nueva función para crear emprendimiento con subida de imagen
+export const crearEmprendimiento = async (formData) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.post(API_URL_EMPRENDIMIENTOS, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}` // agrega el token
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear emprendimiento:", error);
+    throw error;
+  }
+};
+

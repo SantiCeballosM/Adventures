@@ -1,0 +1,94 @@
+.crear-emprendimiento {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .crear-emprendimiento h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+  }
+  
+  .crear-emprendimiento form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .crear-emprendimiento input[type="text"],
+  .crear-emprendimiento input[type="file"],
+  .crear-emprendimiento select,
+  .crear-emprendimiento textarea {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+  }
+  
+  .crear-emprendimiento textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .crear-emprendimiento label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+  }
+  
+  .crear-emprendimiento button {
+    padding: 14px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .crear-emprendimiento button:hover {
+    background-color: #005fa3;
+  }
+  
+  /* Responsive: Tablets y móviles */
+  @media (max-width: 768px) {
+    .crear-emprendimiento {
+      padding: 20px;
+      margin: 20px;
+    }
+  
+    .crear-emprendimiento input,
+    .crear-emprendimiento select,
+    .crear-emprendimiento textarea {
+      font-size: 15px;
+      padding: 10px;
+    }
+  
+    .crear-emprendimiento button {
+      font-size: 15px;
+      padding: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .crear-emprendimiento {
+      padding: 15px;
+      margin: 15px;
+    }
+  
+    .crear-emprendimiento h2 {
+      font-size: 20px;
+    }
+  
+    .crear-emprendimiento button {
+      padding: 10px;
+    }
+  }
+  

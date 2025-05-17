@@ -15,7 +15,6 @@ const RegisterUsuario = () => {
   const [roles, setRoles] = useState([]);
   const [error, setError] = useState("");
 
-  // Obtener roles disponibles al cargar el componente
   useEffect(() => {
     const fetchRoles = async () => {
       try {
@@ -30,14 +29,26 @@ const RegisterUsuario = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validación directa para cédula (solo números, máx 10 dígitos)
+    if (name === "cedula") {
+      if (!/^\d{0,10}$/.test(value)) return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación manual antes de enviar
     if (!formData.rol_id) {
       setError("Debes seleccionar un rol");
+      return;
+    }
+
+    if (formData.cedula.length > 10) {
+      setError("La cédula no debe tener más de 10 dígitos.");
       return;
     }
 
@@ -46,7 +57,6 @@ const RegisterUsuario = () => {
 
       if (response.success) {
         alert("Usuario registrado exitosamente");
-        // Limpiar formulario
         setFormData({
           nombre_completo: "",
           cedula: "",
@@ -71,7 +81,7 @@ const RegisterUsuario = () => {
   };
 
   return (
-    <div className="register-container ">
+    <div className="register-container">
       <h2>Registrar Usuario</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -89,12 +99,15 @@ const RegisterUsuario = () => {
         <div className="form-group">
           <label htmlFor="cedula">Cédula:</label>
           <input
-            type="number"
+            type="text"
             id="cedula"
             name="cedula"
             value={formData.cedula}
             onChange={handleChange}
             required
+            maxLength={10}
+            pattern="\d{1,10}"
+            placeholder="Solo números, máx 10 dígitos"
           />
         </div>
         <div className="form-group">

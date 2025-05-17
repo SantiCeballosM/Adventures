@@ -45,8 +45,8 @@ export default function Banner(){
             <div className="search-section">
               <div className="quote-section">
                 <blockquote className="landing-quote">
-                  “Somos una aplicación web donde permitimos la conexión entre
-                  proyectos, ideas y emprendimientos con posibles usuarios e
+                  “Somos una aplicación web donde permitimos la conexión de
+                  emprendimientos con posibles usuarios e
                   inversionistas”
                 </blockquote>
               </div>
