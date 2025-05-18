@@ -1,8 +1,14 @@
 import "../styles/Navbar.css";
 import logo from "../img/Adventures_logo.png";
-import { FaSearch, FaUser, FaBriefcase, FaUserTie, FaUserShield } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaBriefcase,
+  FaUserTie,
+  FaUserShield,
+} from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -10,9 +16,10 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [rol, setRol] = useState("");
-
+  const [nombreUsuario, setNombreUsuario] = useState("");
   const dropdownRef = useRef(null);
   const navbarRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +36,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const rolGuardado = localStorage.getItem("rol");
-    if (rolGuardado) {
+    const nombreGuardado = localStorage.getItem("nombreUsuario");
+
+    if (rolGuardado && nombreGuardado) {
       setRol(rolGuardado);
+      setNombreUsuario(nombreGuardado);
       setIsLoggedIn(true);
     } else {
       setRol("");
+      setNombreUsuario("");
       setIsLoggedIn(false);
     }
   }, []);
@@ -56,7 +67,10 @@ const Navbar = () => {
     setShowDropdown(false);
     localStorage.removeItem("rol");
     localStorage.removeItem("logeado");
+    localStorage.removeItem("nombreUsuario");
     setRol("");
+    setNombreUsuario("");
+    navigate("/");
   };
 
   const getRoleIcon = (role) => {
@@ -82,7 +96,6 @@ const Navbar = () => {
       ref={navbarRef}
     >
       <div className="container-fluid px-3">
-        {/* Logo y búsqueda en móvil */}
         <div className="d-flex align-items-center mobile-top-section">
           <a
             className="navbar-brand d-flex align-items-center me-auto"
@@ -93,7 +106,7 @@ const Navbar = () => {
               alt="Adventures logo"
               className="navbar-logo me-2"
             />
-            <span className="brand-text d-none d-lg-inline">Adventures</span>
+            {/* <span className="brand-text d-none d-lg-inline">Adventures</span> */}
           </a>
 
           <form
@@ -141,7 +154,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* Opciones para Inversionista */}
             {rol === "inversionista" && (
               <>
                 <li className="nav-item">
@@ -157,7 +169,6 @@ const Navbar = () => {
               </>
             )}
 
-            {/* Opciones para Emprendedor */}
             {rol === "emprendedor" && (
               <>
                 <li className="nav-item">
@@ -173,7 +184,6 @@ const Navbar = () => {
               </>
             )}
 
-            {/* Opción para Administrador */}
             {rol === "administrador" && (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/modificar-usuarios">
@@ -199,13 +209,20 @@ const Navbar = () => {
           </form>
 
           <div className="profile-dropdown" ref={dropdownRef}>
-            <div
-              className="profile-icon d-flex align-items-center justify-content-center icon_perfile_1"
-              onClick={toggleDropdown}
-
-              title={rol}
-            >
-              {getRoleIcon(rol)}
+            <div className="d-flex align-items-center gap-2">
+              {isLoggedIn && (
+                <div className="text-end me-1 small user-label">
+                  <div className="fw-bold">{nombreUsuario}</div>
+                  <div className="text-muted">({rol})</div>
+                </div>
+              )}
+              <div
+                className="profile-icon d-flex align-items-center justify-content-center icon_perfile_1"
+                onClick={toggleDropdown}
+                title={rol}
+              >
+                {getRoleIcon(rol)}
+              </div>
             </div>
 
             {showDropdown && (
@@ -228,9 +245,7 @@ const Navbar = () => {
                     <NavLink
                       className="dropdown-item"
                       to="/login"
-                      onClick={() => {
-                        setShowDropdown(false);
-                      }}
+                      onClick={() => setShowDropdown(false)}
                     >
                       Iniciar sesión
                     </NavLink>

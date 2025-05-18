@@ -12,7 +12,13 @@
   font-size: 0.8rem;
   text-transform: capitalize;
 }
-
+.user-role-text {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #333;
+  max-width: 80px;
+  word-wrap: break-word;
+}
 /* Estilos para el dropdown */
 .dropdown-menu {
   position: absolute;
@@ -73,6 +79,11 @@
   height: 35px;
   border-radius: 0.5rem;
 }
+.navbar-user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
 
 .brand-text {
   font-weight: bold;
@@ -100,7 +111,7 @@
   border-radius: 20px;
   background-color: #e8dee9;
   border: none;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 
@@ -110,12 +121,29 @@
   border: none;
   border-radius: 20px;
   padding: 0.375rem 0.75rem;
+
+}
+.user-label {
+  line-height: 1;
+  font-size: 0.75rem;
+}
+
+.profile-icon {
+  background-color: #414141;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-icon {
   font-size: 1.5rem;
   cursor: pointer;
-  color: #333;
+  color: #ffffff;
   transition: color 0.3s;
   width: 40px;
   height: 40px;
@@ -123,7 +151,7 @@
 }
 
 .profile-icon:hover {
-  color: #007bff;
+  color: #000000;
   background-color: rgba(0, 0, 0, 0.05);
 }
 

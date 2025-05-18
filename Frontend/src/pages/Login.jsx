@@ -17,7 +17,9 @@ const handleSubmit = async (e) => {
   try {
     const data = await login(correo, contraseña);
     localStorage.setItem('token', data.token);
-    localStorage.setItem('rol', data.rol); 
+    localStorage.setItem('rol', data.rol);
+    localStorage.setItem('nombreUsuario', data.nombre);
+
     alert('Login exitoso');
     navigate('/');
   } catch (err) {
