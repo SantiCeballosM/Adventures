@@ -44,9 +44,9 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
       // Insertar nuevo emprendimiento
       await db.query(
         `INSERT INTO emprendimiento 
-          (nombre_Emprendimiento, estado_emprendimiento, categoria, descripcion, url_logo, rol_usuario_id) 
-          VALUES (?, ?, ?, ?, ?, ?)`,
-        [nombre, estado, categoria, descripcion, logoPath, rol_usuario_id]
+          (nombre_Emprendimiento, estado_emprendimiento, categoria, descripcion, url_logo, rol_usuario_id, usuario_id) 
+          VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [nombre, estado, categoria, descripcion, logoPath, rol_usuario_id, usuario_id]
       );
   
       res.status(201).json({ message: "Emprendimiento creado correctamente" });
@@ -60,37 +60,23 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
   });
 
 // Obtener emprendimientos del usuario
+// Obtener emprendimientos del usuario
 router.get('/misEmprendimientos', authMiddleware, async (req, res) => {
     try {
       const usuario_id = req.usuario.id;
   
-      // Obtener los rol_usuario_id asociados a este usuario
-      const [rolUsuarios] = await db.query(
-        'SELECT rol_id FROM rol_usuarios WHERE usuario_id = ?',
+      const [emprendimientos] = await db.query(
+        'SELECT * FROM emprendimiento WHERE usuario_id = ?',
         [usuario_id]
       );
   
-      // Si no hay resultados, devolver array vacío
-      if (rolUsuarios.length === 0) {
-        return res.json([]);
-      }
-  
-      // Obtener array de IDs de rol_usuarios (en este caso, rol_id)
-      const idsDeRolUsuario = rolUsuarios.map(row => row.rol_id); // O el campo correcto según la consulta
-  
-      // Ahora sí, usar esos IDs para buscar emprendimientos
-      const [emprendimientos] = await db.query(
-        'SELECT * FROM emprendimiento WHERE rol_usuario_id IN (?)',
-        [idsDeRolUsuario]
-      );
-  
       res.json(emprendimientos);
-  
     } catch (error) {
       console.error('Error al obtener emprendimientos del usuario:', error);
       res.status(500).json({ error: 'Error al obtener emprendimientos del usuario' });
     }
   });
+  
   
 
 module.exports = router;

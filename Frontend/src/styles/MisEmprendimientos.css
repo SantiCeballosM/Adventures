@@ -1,27 +1,197 @@
 .mis-emprendimientos {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+  
+  .mis-emprendimientos h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  
+  .sin-emprendimientos {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  
+  .sin-emprendimientos p {
+    font-size: 1.1rem;
+    color: #6c757d;
   }
   
   .emprendimientos-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 0.5rem;
   }
   
   .emprendimiento-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    width: 280px;
-    box-shadow: 0 0 5px #ccc;
+    background: rgb(208, 208, 208);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .emprendimiento-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .emprendimiento-card .logo-container {
+    height: 180px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
   }
   
   .emprendimiento-card .logo {
-    width: 100%;
-    height: 150px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    margin-bottom: 10px;
   }
   
+  .card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .emprendimiento-card h3 {
+    margin: 0 0 0.8rem 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+  }
+  
+  .emprendimiento-card p {
+    margin: 0.4rem 0;
+    color: #495057;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .emprendimiento-card p strong {
+    color: #343a40;
+  }
+  
+  .acciones {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
+  
+  .btn-editar, .btn-eliminar {
+    flex: 1;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-editar {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .btn-editar:hover {
+    background-color: #2980b9;
+  }
+  
+  .btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .btn-eliminar:hover {
+    background-color: #c0392b;
+  }
+  /* Agregar estos estilos adicionales */
+.btn-crear {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #2ecc71;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-crear:hover {
+    background-color: #27ae60;
+  }
+  
+  .placeholder-logo {
+    width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .descripcion {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0.8rem 0 !important;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .emprendimientos-list {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .mis-emprendimientos {
+      padding: 1rem;
+    }
+    
+    .emprendimientos-list {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+    
+    .emprendimiento-card {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .mis-emprendimientos h2 {
+      font-size: 1.6rem;
+    }
+    
+    .acciones {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    
+    .btn-editar, .btn-eliminar {
+      width: 100%;
+    }
+  }

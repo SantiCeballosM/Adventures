@@ -23,12 +23,21 @@ const handleSubmit = async (e) => {
   } catch (err) {
     setError('Credenciales incorrectas');
   }
-};
+};  
 
   return (
-    <div className="login-container">
+   <div className="login-container">
+    <div className="login-box">
+
+      {/* Imagen a la izquierda */}
+      <div className="login-image">
+        <img src="src/img/imagenlogin.jpeg" alt="Login Visual" />
+      </div>
+
+      {/* Formulario a la derecha */}
       <div className="login-form">
         <h2>Iniciar Sesión</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="correo">Correo:</label>
@@ -40,6 +49,7 @@ const handleSubmit = async (e) => {
               required
             />
           </div>
+
           <div className="form-group">
             <label htmlFor="contraseña">Contraseña:</label>
             <input
@@ -50,22 +60,24 @@ const handleSubmit = async (e) => {
               required
             />
           </div>
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="btn-submit">Iniciar Sesión</button>
-          <div className="my-3">
-            <span>No tienes cuenta? </span>
-            <button type="button" className="btn-register" onClick={() => setMostrarOpciones(!mostrarOpciones)}>
-              <NavLink to="/registerUsuario" className="navlink-register">Registrate</NavLink>
-            </button>
 
-            <br />
-            <span>
-              <a href="#">Recuperar contraseña</a>
-            </span>
+          {error && <p className="error-message">{error}</p>}
+
+          <button type="submit" className="btn-submit">Iniciar Sesión</button>
+
+          <div className="login-links">
+            <p>
+              No tienes cuenta?{" "}
+              <button type="button" className="btn-register" onClick={() => setMostrarOpciones(!mostrarOpciones)}>
+              <NavLink to="/registerUsuario" className="navlink-register">Registrate</NavLink>
+              </button>
+            </p>
+            <a href="#">Recuperar contraseña</a>
           </div>
         </form>
       </div>
     </div>
+  </div>
   );
 };
 
