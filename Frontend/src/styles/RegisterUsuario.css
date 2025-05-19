@@ -5,23 +5,18 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Permite que crezca hacia abajo */
     padding: 20px;
     box-sizing: border-box;
-    overflow: hidden; /* Elimina cualquier scroll */
-    position: fixed; /* Fija el contenedor */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
+
+    overflow: auto; /* ✅ Activa scroll cuando sea necesario */
+    position: relative; /* ✅ Elimina el fixed */
 }
 
-/* Contenedor principal con animación */
+/* Contenedor principal */
 .register-container {
-    max-width: 1000px;
     width: 90%;
+    max-width: 1000px;
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 12px;
@@ -32,11 +27,12 @@
     opacity: 0;
     transform: translateY(30px);
     margin: 20px auto;
-    max-height: 90vh;
-    overflow: hidden; /* Cambiado de auto a hidden */
-    display: flex;
-    flex-direction: column;
+
+    /* ⚠️ Deja que el contenido crezca si hay errores largos */
+    max-height: none;
+    overflow: visible;
 }
+
 
 /* Animación */
 @keyframes floatIn {
@@ -153,6 +149,12 @@
 .submit-btn:hover {
     background-color: #2980b9;
 }
+.error-message {
+    min-height: 2rem; /* o más si tu mensaje es grande */
+    color: red;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
 @media (min-width: 992px) and (max-width: 1058px) {
     .register-page-container {
         align-items: flex-start;
@@ -228,7 +230,9 @@
         padding: 10px;
         align-items: flex-start;
         background-attachment: scroll;
-        overflow: hidden; /* Sin scroll en el contenedor padre */
+        
+        max-height: 100vh; /* Limita la altura a la pantalla */
+        overflow-y: auto;  /* Activa scroll vertical solo si se necesita */
     }
 
     .register-container {

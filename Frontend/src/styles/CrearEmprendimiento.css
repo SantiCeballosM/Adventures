@@ -1,24 +1,57 @@
-.crear-emprendimiento {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    background-color: #ffffff;
-    font-family: 'Segoe UI', sans-serif;
+/* Fondo general del sitio */
+.crear-emprendimiento-container {
+    background-image: url('../img/fondo3.avif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
   }
   
+  /* Contenedor principal del formulario */
+  .crear-emprendimiento {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  /* Imagen al lado del formulario */
+  .crear-emprendimiento .imagen-lado {
+    flex: 1;
+    background-image: url('../img/imagen5.jpg'); /* o .png si cambiaste */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    padding-left: 100px;
+  }
+  
+  /* Lado del formulario */
+  .crear-emprendimiento .formulario-lado {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Título del formulario */
   .crear-emprendimiento h2 {
     text-align: center;
     color: #333;
     margin-bottom: 25px;
   }
   
+  /* Estructura del formulario */
   .crear-emprendimiento form {
     display: flex;
     flex-direction: column;
   }
   
+  /* Campos del formulario */
   .crear-emprendimiento input[type="text"],
   .crear-emprendimiento input[type="file"],
   .crear-emprendimiento select,
@@ -36,12 +69,14 @@
     min-height: 100px;
   }
   
+  /* Etiquetas */
   .crear-emprendimiento label {
     font-weight: bold;
     margin-bottom: 5px;
     color: #444;
   }
   
+  /* Botón */
   .crear-emprendimiento button {
     padding: 14px;
     background-color: #0077cc;
@@ -57,38 +92,30 @@
     background-color: #005fa3;
   }
   
-  /* Responsive: Tablets y móviles */
+  /* Responsive */
   @media (max-width: 768px) {
     .crear-emprendimiento {
-      padding: 20px;
-      margin: 20px;
+      flex-direction: column;
     }
   
-    .crear-emprendimiento input,
-    .crear-emprendimiento select,
-    .crear-emprendimiento textarea {
-      font-size: 15px;
-      padding: 10px;
+    .crear-emprendimiento .imagen-lado {
+      height: 200px;
+      min-height: unset;
     }
-  
-    .crear-emprendimiento button {
-      font-size: 15px;
-      padding: 12px;
+  }
+  /* Animación de entrada suave */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   
-  @media (max-width: 480px) {
-    .crear-emprendimiento {
-      padding: 15px;
-      margin: 15px;
-    }
-  
-    .crear-emprendimiento h2 {
-      font-size: 20px;
-    }
-  
-    .crear-emprendimiento button {
-      padding: 10px;
-    }
+  .crear-emprendimiento {
+    animation: fadeUp 0.8s ease-out;
   }
   

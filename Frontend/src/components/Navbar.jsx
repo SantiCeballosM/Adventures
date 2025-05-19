@@ -22,6 +22,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const rolGuardado = localStorage.getItem("rol");
+    const nombreGuardado = localStorage.getItem("nombreUsuario");
+  
+    if (rolGuardado && nombreGuardado) {
+      setRol(rolGuardado.toLowerCase()); // 🔽 fuerza minúsculas
+      setNombreUsuario(nombreGuardado);
+      setIsLoggedIn(true);
+    } else {
+      setRol("");
+      setNombreUsuario("");
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
@@ -34,20 +49,7 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
-  useEffect(() => {
-    const rolGuardado = localStorage.getItem("rol");
-    const nombreGuardado = localStorage.getItem("nombreUsuario");
 
-    if (rolGuardado && nombreGuardado) {
-      setRol(rolGuardado);
-      setNombreUsuario(nombreGuardado);
-      setIsLoggedIn(true);
-    } else {
-      setRol("");
-      setNombreUsuario("");
-      setIsLoggedIn(false);
-    }
-  }, []);
 
   const toggleNavbar = () => setIsCollapsed(!isCollapsed);
   const toggleDropdown = () => setShowDropdown(!showDropdown);
@@ -172,7 +174,7 @@ const Navbar = () => {
             {rol === "emprendedor" && (
               <>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/crearEmprendimiento">
+                  <NavLink className="nav-link" to="/registerEmprendimiento">
                     Crear Emprendimiento
                   </NavLink>
                 </li>

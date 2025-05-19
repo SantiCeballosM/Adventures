@@ -172,21 +172,25 @@ const RegisterUsuario = () => {
                   required
                 >
                   <option value="">Selecciona un rol</option>
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.rol}
-                    </option>
-                  ))}
+                  {roles
+                    .filter((role) => role.rol !== "Administrador")
+                    .map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.rol}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
             <button type="submit" className="submit-btn">
               Registrar Usuario
             </button>
-            
+
             <div className="login-redirect">
               <span>¿Ya tienes cuenta? </span>
-              <NavLink to="/login" className="login-btn">Iniciar sesión</NavLink>
+              <NavLink to="/login" className="login-btn">
+                Iniciar sesión
+              </NavLink>
             </div>
           </form>
         </div>

@@ -60,7 +60,6 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
   });
 
 // Obtener emprendimientos del usuario
-// Obtener emprendimientos del usuario
 router.get('/misEmprendimientos', authMiddleware, async (req, res) => {
     try {
       const usuario_id = req.usuario.id;

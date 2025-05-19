@@ -9,7 +9,7 @@ import Categoria_Tecnologia from "./pages/Categoria_Tecnologia";
 // import DetalleEmprendimiento from "./pages/DetalleEmprendimiento";
 import Emprendimientos from './pages/Emprendimientos';
 import Invertir from './pages/Invertir';
-import CrearEmprendimiento from './pages/CrearEmprendimiento';
+import RegisterEmprendimiento from './pages/RegisterEmprendimiento';
 import MostrarEmprendimientos from './pages/MostrarEmprendimientos';
 
 
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/tecnologia_innovacion" element={<Categoria_Tecnologia />} />
         <Route path="/emprendimientos" element={<Emprendimientos/>}/>
         <Route path="/invertir" element={<Invertir/>}/>
-        <Route path="/crearEmprendimiento" element={<CrearEmprendimiento/>}/>
+        <Route path="/RegisterEmprendimiento" element={<RegisterEmprendimiento/>}/>
         <Route path="/mostrarEmprendimientos" element={<MostrarEmprendimientos/>}/>
       </Routes>
     </BrowserRouter>  
