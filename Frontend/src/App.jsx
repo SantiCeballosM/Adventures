@@ -11,6 +11,7 @@ import Emprendimientos from './pages/Emprendimientos';
 import Invertir from './pages/Invertir';
 import RegisterEmprendimiento from './pages/RegisterEmprendimiento';
 import MostrarEmprendimientos from './pages/MostrarEmprendimientos';
+import NotFound from './pages/NotFound';
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/invertir" element={<Invertir/>}/>
         <Route path="/RegisterEmprendimiento" element={<RegisterEmprendimiento/>}/>
         <Route path="/mostrarEmprendimientos" element={<MostrarEmprendimientos/>}/>
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>  
   );
