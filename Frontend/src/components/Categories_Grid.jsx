@@ -108,23 +108,32 @@ const Categories_Grid = () => {
         <h1 className="main-title">ESTAS SON NUESTRAS CATEGORÍAS</h1>
       </div>
 
-      <NavLink to="/Tecnologia_Innovacion" className="grid-link" onClick={() => window.scrollTo(0, 0)}>
-      <div className="grid-container">
-        {categorias.map((categoria, index) => (
-          <div className="grid-item" key={index}>
-            <img src={categoria.imagen} alt={categoria.titulo} />
-            <div className="text-content">
-              <h3>{categoria.titulo}</h3>
-              <p>{categoria.descripcion}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <NavLink
+        to="/Tecnologia_Innovacion"
+        className="grid-link"
+        onClick={() => window.scrollTo(0, 0)}
+      >
+        <div className="grid-container">
+          {categorias.map((categoria, index) => (
+            <NavLink 
+              to={`/emprendimientos/categoria/${encodeURIComponent(
+                categoria.titulo
+              )}`}
+              key={index}
+              className="grid-item grid-link"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              <img src={categoria.imagen} alt={categoria.titulo} />
+              <div className="text-content">
+                <h3>{categoria.titulo}</h3>
+                <p>{categoria.descripcion}</p>
+              </div>
+            </NavLink>
+          ))}
+        </div>
       </NavLink>
     </div>
   );
 };
 
 export default Categories_Grid;
-
-

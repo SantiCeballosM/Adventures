@@ -76,6 +76,24 @@ router.get('/misEmprendimientos', authMiddleware, async (req, res) => {
     }
   });
   
-  
+  // Obtener todos los emprendimientos por categoría
+router.get("/categoria/:nombreCategoria", async (req, res) => {
+  try {
+    // Decodificar la categoría (por ejemplo: "Tecnolog%C3%ADa%20e%20Innovaci%C3%B3n" → "Tecnología e Innovación")
+    const nombreCategoria = decodeURIComponent(req.params.nombreCategoria).toLowerCase();
+
+    const [emprendimientos] = await db.query(
+      "SELECT * FROM emprendimiento WHERE LOWER(categoria) = ?",
+      [nombreCategoria]
+    );
+
+    res.json(emprendimientos);
+  } catch (error) {
+    console.error("Error al obtener emprendimientos por categoría:", error);
+    res.status(500).json({ error: "Error al obtener emprendimientos" });
+  }
+  console.log("Categoría recibida:", nombreCategoria);
+});
+
 
 module.exports = router;

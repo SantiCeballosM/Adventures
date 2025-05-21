@@ -11,6 +11,7 @@ import Emprendimientos from './pages/Emprendimientos';
 import Invertir from './pages/Invertir';
 import RegisterEmprendimiento from './pages/RegisterEmprendimiento';
 import MostrarEmprendimientos from './pages/MostrarEmprendimientos';
+import Categoria_Filtrada from "./pages/Categoria_Filtrada";
 import NotFound from './pages/NotFound';
 
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/invertir" element={<Invertir/>}/>
         <Route path="/RegisterEmprendimiento" element={<RegisterEmprendimiento/>}/>
         <Route path="/mostrarEmprendimientos" element={<MostrarEmprendimientos/>}/>
+        <Route path="/emprendimientos/categoria/:nombreCategoria" element={<Categoria_Filtrada />} />
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>  
