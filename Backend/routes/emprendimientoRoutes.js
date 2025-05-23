@@ -77,10 +77,11 @@ router.get('/misEmprendimientos', authMiddleware, async (req, res) => {
   });
   
   // Obtener todos los emprendimientos por categoría
+
 router.get("/categoria/:nombreCategoria", async (req, res) => {
   try {
-    // Decodificar la categoría (por ejemplo: "Tecnolog%C3%ADa%20e%20Innovaci%C3%B3n" → "Tecnología e Innovación")
     const nombreCategoria = decodeURIComponent(req.params.nombreCategoria).toLowerCase();
+    console.log("Categoría recibida:", nombreCategoria); // ✅ Correctamente dentro del try
 
     const [emprendimientos] = await db.query(
       "SELECT * FROM emprendimiento WHERE LOWER(categoria) = ?",
@@ -92,7 +93,43 @@ router.get("/categoria/:nombreCategoria", async (req, res) => {
     console.error("Error al obtener emprendimientos por categoría:", error);
     res.status(500).json({ error: "Error al obtener emprendimientos" });
   }
-  console.log("Categoría recibida:", nombreCategoria);
+});
+
+
+
+// router.get('/categoria/:nombre', async (req, res) => {
+//   try {
+//     const nombreCategoria = req.params.nombre;
+//     const emprendimientos = await getEmprendimientosPorCategoria(nombreCategoria);
+//     res.json(emprendimientos);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Error al obtener emprendimientos por categoría' });
+//   }
+//   console.log('Categoría recibida:', req.params.nombre);
+// });
+// Búsqueda de emprendimientos por nombre
+router.get("/", async (req, res) => {
+  const search = req.query.search;
+
+  if (!search) {
+    return res.status(400).json({ error: "Parámetro de búsqueda faltante" });
+  }
+
+  try {
+    const [resultados] = await db.query(
+      `SELECT id, nombre_Emprendimiento 
+       FROM emprendimiento 
+       WHERE nombre_Emprendimiento LIKE ? 
+       LIMIT 10`,
+      [`%${search}%`] // Ahora busca en cualquier parte del nombre
+    );
+
+    res.json(resultados);
+  } catch (error) {
+    console.error("Error al buscar emprendimientos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 });
 
 

@@ -200,6 +200,96 @@
 }
 
 /* Responsive */
+/* Contenedor general de la búsqueda para un layout limpio */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 320px;
+  width: 100%;
+}
+
+/* Input de búsqueda con estilo moderno y padding */
+.search-input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 1.5px solid #ccc;
+  font-size: 0.95rem;
+  color: #333;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+/* Cambia el borde y sombra al enfocar el input */
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+  background-color: #fff;
+}
+
+/* Placeholder sutil */
+.search-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Botón de búsqueda con fondo azul y border-radius circular */
+.search-button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.5);
+}
+
+/* Efecto hover para el botón */
+.search-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 10px rgba(0, 86, 179, 0.7);
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  z-index: 1000;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.no-results {
+  padding: 10px;
+  color: #999;
+}
+
 @media (max-width: 992px) {
   .mobile-top-section {
     width: 100%;

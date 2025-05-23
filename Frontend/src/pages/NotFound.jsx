@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const NotFound = () => {
   return (
     <div className="page_404_wrapper">
-      <div className="adventurs_title">ADVENTURS</div>
+      <div className="adventurs_title">ADVENTURES</div>
       <div className="container">
         <div className="tv_section">
           <div className="main_wrapper">
@@ -65,7 +65,6 @@ const NotFound = () => {
           <p>Pero puedes seguir apoyando a emprendedores o crear tu propio emprendimiento.</p>
           <div className="buttons">
             <Link to="/" className="action_btn" aria-label="Volver al inicio">Volver al inicio</Link>
-            <Link to="/crear-emprendimiento" className="action_btn" aria-label="Crear emprendimiento">Crear emprendimiento</Link>
             <Link to="/login" className="action_btn" aria-label="Iniciar sesión">Iniciar sesión</Link>
           </div>
         </div>
