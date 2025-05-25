@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import Navbar from "../components/Navbar";
-import Tecnologia_Innovacion from "../components/Tecnologia_Innovacion";
+import DetalleEmprendimiento from "../components/DetalleEmprendimiento";
+import Footers from "../components/Footers";
+
 
 
 // Componente auxiliar
@@ -11,7 +13,8 @@ export default function Index() {
   return (
     <Fragment>
       <Navbar/>
-      <Tecnologia_Innovacion/>
+        <DetalleEmprendimiento/>
+      <Footers/>
     </Fragment>
   );
 }

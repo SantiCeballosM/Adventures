@@ -147,8 +147,15 @@ const Navbar = () => {
       <div className="container-fluid px-3">
         {/* Logo y menú móvil */}
         <div className="d-flex align-items-center mobile-top-section">
-          <NavLink className="navbar-brand d-flex align-items-center me-auto" to="/">
-            <img src={logo} alt="Adventures logo" className="navbar-logo me-2" />
+          <NavLink
+            className="navbar-brand d-flex align-items-center me-auto"
+            to="/"
+          >
+            <img
+              src={logo}
+              alt="Adventures logo"
+              className="navbar-logo me-2"
+            />
           </NavLink>
 
           {/* Búsqueda móvil */}
@@ -192,7 +199,9 @@ const Navbar = () => {
         </div>
 
         {/* Menú colapsable */}
-        <div className={`collapse navbar-collapse ${isCollapsed ? "" : "show"}`}>
+        <div
+          className={`collapse navbar-collapse ${isCollapsed ? "" : "show"}`}
+        >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
             <li className="nav-item">
               <NavLink className="nav-link NavLink-Inicio" to="/">
@@ -315,7 +324,7 @@ const Navbar = () => {
                   <>
                     <NavLink
                       className="dropdown-item"
-                      to="#"
+                      to="/perfil"
                       onClick={() => setShowDropdownProfile(false)}
                     >
                       Mi perfil

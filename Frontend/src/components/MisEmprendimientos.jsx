@@ -56,7 +56,7 @@ const MisEmprendimientos = () => {
         {emprendimientos.length === 0 ? (
           <div className="sin-emprendimientos">
             <p>No has creado ningún emprendimiento aún.</p>
-            <NavLink to="/CrearEmprendimiento" className="btn-crear">
+            <NavLink to="/registerEmprendimiento" className="btn-crear">
               Crear mi primer emprendimiento
             </NavLink>
           </div>
