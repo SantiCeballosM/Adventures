@@ -26,6 +26,7 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
   }
 
   try {
+    // Obtener el rol_usuario_id relacionado al usuario
     const [rolUsuario] = await db.query(
       "SELECT rol_id FROM rol_usuarios WHERE usuario_id = ? LIMIT 1",
       [usuario_id]
@@ -43,7 +44,15 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
       `INSERT INTO emprendimiento 
         (nombre_Emprendimiento, estado_emprendimiento, categoria, descripcion, url_logo, rol_usuario_id, usuario_id) 
         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [nombre, estado, categoria, descripcion, logoPath, rol_usuario_id, usuario_id]
+      [
+        nombre,
+        estado,
+        categoria,
+        descripcion,
+        logoPath,
+        rol_usuario_id,
+        usuario_id,
+      ]
     );
 
     res.status(201).json({ message: "Emprendimiento creado correctamente" });
@@ -57,26 +66,30 @@ router.post("/", authMiddleware, upload.single("logo"), async (req, res) => {
 });
 
 // Obtener emprendimientos del usuario autenticado
-router.get('/misEmprendimientos', authMiddleware, async (req, res) => {
+router.get("/misEmprendimientos", authMiddleware, async (req, res) => {
   try {
     const usuario_id = req.usuario.id;
 
     const [emprendimientos] = await db.query(
-      'SELECT * FROM emprendimiento WHERE usuario_id = ?',
+      "SELECT * FROM emprendimiento WHERE usuario_id = ?",
       [usuario_id]
     );
 
     res.json(emprendimientos);
   } catch (error) {
-    console.error('Error al obtener emprendimientos del usuario:', error);
-    res.status(500).json({ error: 'Error al obtener emprendimientos del usuario' });
+    console.error("Error al obtener emprendimientos del usuario:", error);
+    res
+      .status(500)
+      .json({ error: "Error al obtener emprendimientos del usuario" });
   }
 });
 
 // Obtener todos los emprendimientos por categoría
 router.get("/categoria/:nombreCategoria", async (req, res) => {
   try {
-    const nombreCategoria = decodeURIComponent(req.params.nombreCategoria).toLowerCase();
+    const nombreCategoria = decodeURIComponent(
+      req.params.nombreCategoria
+    ).toLowerCase();
     console.log("Categoría recibida:", nombreCategoria);
 
     const [emprendimientos] = await db.query(
@@ -91,10 +104,10 @@ router.get("/categoria/:nombreCategoria", async (req, res) => {
   }
 });
 
-// Obtener emprendimiento por ID (✅ esta debe ir ANTES que "/")
+// Obtener emprendimiento por ID 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  console.log("📥 GET emprendimiento con ID:", id); // Agregado
+  console.log(" GET emprendimiento con ID:", id); // Agregado
 
   try {
     const [result] = await db.query(
@@ -115,7 +128,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Buscar emprendimientos por nombre (✅ esta debe ir al FINAL)
+// Buscar emprendimientos por nombre
 router.get("/", async (req, res) => {
   const search = req.query.search;
 
@@ -136,6 +149,54 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.error("Error al buscar emprendimientos:", error);
     res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+  // Eliminar emprendimiento
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const usuario_id = req.usuario.id;
+
+    const [result] = await db.query(
+      'DELETE FROM emprendimiento WHERE id = ? AND usuario_id = ?',
+      [id, usuario_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Emprendimiento no encontrado o no autorizado' });
+    }
+
+    res.json({ message: 'Emprendimiento eliminado correctamente' });
+  } catch (error) {
+    console.error('Error eliminando emprendimiento:', error);
+    res.status(500).json({ error: 'Error interno al eliminar el emprendimiento' });
+  }
+});
+ // Actualizar emprendimiento
+router.put("/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { nombre_Emprendimiento, estado_emprendimiento, categoria, descripcion } = req.body;
+  const usuario_id = req.usuario.id;
+
+  try {
+    const [result] = await db.query(
+      `UPDATE emprendimiento SET 
+        nombre_Emprendimiento = ?, 
+        estado_emprendimiento = ?, 
+        categoria = ?, 
+        descripcion = ?
+      WHERE id = ? AND usuario_id = ?`,
+      [nombre_Emprendimiento, estado_emprendimiento, categoria, descripcion, id, usuario_id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Emprendimiento no encontrado o no autorizado" });
+    }
+
+    res.json({ message: "Emprendimiento actualizado correctamente" });
+  } catch (error) {
+    console.error("Error actualizando emprendimiento:", error);
+    res.status(500).json({ error: "Error al actualizar el emprendimiento" });
   }
 });
 
