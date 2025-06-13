@@ -167,3 +167,50 @@ html, body {
     padding: 1.5rem;
   }
 }
+
+/* Media query para tablets y móviles */
+@media (max-width: 768px) {
+  .perfil-wrapper {
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .perfil-card {
+    flex-direction: column;
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .perfil-left-text {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .perfil-right {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    width: 100%;
+  }
+}
+
+/* Extra responsive: móviles muy pequeños    */
+@media (max-width: 480px) {
+  .perfil-left-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .perfil-left-text p {
+    font-size: 0.9rem;
+  }
+
+  .perfil-right input,
+  .perfil-right select,
+  .perfil-right button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .perfil-right label {
+    font-size: 0.85rem;
+  }
+}

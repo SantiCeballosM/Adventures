@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/perfil.css';
 
+// Importa los componentes
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footers';
+
 const Perfil = () => {
   const [usuario, setUsuario] = useState(null);
   const [editando, setEditando] = useState(false);
@@ -81,71 +85,77 @@ const Perfil = () => {
   if (!usuario) return <div className="perfil-wrapper">Cargando...</div>;
 
   return (
-    <div className="perfil-wrapper">
-      <div className="perfil-card">
-        <div className="perfil-right">
-          {mensaje && (
-            <p className={`mensaje ${mensaje.includes('✅') ? 'success' : ''}`}>
-              {mensaje}
-            </p>
-          )}
+    <>
+      <Navbar /> {/* Navbar arriba */}
 
-          <label>Nombre completo:</label>
-          <input
-            type="text"
-            name="nombre_completo"
-            value={usuario.nombre_completo}
-            onChange={handleChange}
-            disabled={!editando}
-          />
+      <div className="perfil-wrapper">
+        <div className="perfil-card">
+          <div className="perfil-right">
+            {mensaje && (
+              <p className={`mensaje ${mensaje.includes('✅') ? 'success' : ''}`}>
+                {mensaje}
+              </p>
+            )}
 
-          <label>Correo:</label>
-          <input
-            type="email"
-            name="correo"
-            value={usuario.correo}
-            onChange={handleChange}
-            disabled={!editando}
-          />
+            <label>Nombre completo:</label>
+            <input
+              type="text"
+              name="nombre_completo"
+              value={usuario.nombre_completo}
+              onChange={handleChange}
+              disabled={!editando}
+            />
 
-          <label>Cédula:</label>
-          <input
-            type="text"
-            name="cedula"
-            value={usuario.cedula}
-            onChange={handleChange}
-            disabled={!editando}
-          />
+            <label>Correo:</label>
+            <input
+              type="email"
+              name="correo"
+              value={usuario.correo}
+              onChange={handleChange}
+              disabled={!editando}
+            />
 
-          <label>Fecha de nacimiento:</label>
-          <input
-            type="date"
-            name="fecha_nacimiento"
-            value={new Date(usuario.fecha_nacimiento).toISOString().split('T')[0]}
-            onChange={handleChange}
-            disabled={!editando}
-          />
+            <label>Cédula:</label>
+            <input
+              type="text"
+              name="cedula"
+              value={usuario.cedula}
+              onChange={handleChange}
+              disabled={!editando}
+            />
 
-          <label>Género:</label>
-          <select
-            name="genero"
-            value={usuario.genero}
-            onChange={handleChange}
-            disabled={!editando}
-          >
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
-          </select>
+            <label>Fecha de nacimiento:</label>
+            <input
+              type="date"
+              name="fecha_nacimiento"
+              value={new Date(usuario.fecha_nacimiento).toISOString().split('T')[0]}
+              onChange={handleChange}
+              disabled={!editando}
+            />
 
-          {!editando ? (
-            <button onClick={() => setEditando(true)}>Editar perfil</button>
-          ) : (
-            <button onClick={handleGuardar}>Guardar cambios</button>
-          )}
+            <label>Género:</label>
+            <select
+              name="genero"
+              value={usuario.genero}
+              onChange={handleChange}
+              disabled={!editando}
+            >
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
+            </select>
+
+            {!editando ? (
+              <button onClick={() => setEditando(true)}>Editar perfil</button>
+            ) : (
+              <button onClick={handleGuardar}>Guardar cambios</button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      <Footer /> {/* Footer abajo */}
+    </>
   );
 };
 
